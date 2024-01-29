@@ -12,22 +12,17 @@ const bot = new Bot(process.env.BOT_API_KEY);
 
 bot.command("start", async (ctx) => {
   const startKeyboard = new Keyboard()
-    .text("HTML")
-    .text("CSS")
+    .text("HTML/CSS")
     .text("JavaScript")
-    .row()
     .text("React")
-    .text("Node")
-    .row()
-    .text("Random question")
     .resized();
-  await ctx.reply("Hello.");
-  await ctx.reply("check theme", {
+  await ctx.reply("Я бот, який допоможе вивчити основні питання по темах \u2198 ");
+  await ctx.reply("Вибери тему та отримай випадкове питання \u2705", {
     reply_markup: startKeyboard,
   });
 });
 
-bot.hears(["HTML", "CSS", "JavaScript", "React", "Node", "Random question"], async (ctx) => {
+bot.hears(["HTML/CSS", "JavaScript", "React", "Node", "Randomquestion"], async (ctx) => {
   const topic = ctx.message.text.toLowerCase();
   const {question, questionTopic} = getRandomQuestion(topic);
 
@@ -50,7 +45,7 @@ bot.hears(["HTML", "CSS", "JavaScript", "React", "Node", "Random question"], asy
     inlineKeyboard = InlineKeyboard.from(buttonRows)
   } else {
     inlineKeyboard = new InlineKeyboard().text(
-      "Get answer",
+      "\u2611 Подивитись відповідь \u2611",
       JSON.stringify({
         type: questionTopic,
         questionId: question.id,
@@ -82,7 +77,7 @@ if(!callbackData.type.includes('option')){
 }
 
 if(callbackData.isCorrect){
-    await ctx.reply('Ok!');
+    await ctx.reply(' Ok! \u2705');
     await ctx.answerCallbackQuery();
     return
 }
